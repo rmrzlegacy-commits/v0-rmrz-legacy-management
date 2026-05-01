@@ -48,7 +48,7 @@ const units = [
     bathrooms: 1,
     maxGuests: 2,
     rent: 1250,
-    deposit: 250,
+    deposit: 400,
     images: casitaImages,
     amenities: ["WiFi", "Kitchenette", "Private Entry", "Walk-in Shower"],
     description: "A brand-new construction private studio designed for comfort, simplicity, and an easy stay. Ideal for solo travelers or couples visiting Las Vegas for work, a short getaway, or a peaceful reset away from the Strip. Everything is new, clean, and intentionally set up for a stress-free stay.",
