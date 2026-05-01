@@ -132,8 +132,8 @@ export function ContactForm() {
                 <SelectValue placeholder="Select unit" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="apartment">Apartment - $2,100/mo</SelectItem>
-                <SelectItem value="casita">Casita - $1,300/mo</SelectItem>
+                <SelectItem value="apartment">Apartment - $1,650/mo ($500 deposit)</SelectItem>
+                <SelectItem value="casita">Casita - $1,250/mo ($250 deposit)</SelectItem>
                 <SelectItem value="either">Either unit</SelectItem>
               </SelectContent>
             </Select>

@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "What is the move-in cost?",
-    answer: "First month's rent plus security deposit. Furnished Apartment: $2,100 + $350 deposit. Casita Studio: $1,300 + $200 deposit.",
+    answer: "First month's rent plus security deposit. Furnished Apartment: $1,650 + $500 deposit. Casita Studio: $1,250 + $250 deposit.",
   },
   {
     question: "Is parking available?",
