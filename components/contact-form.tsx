@@ -40,13 +40,15 @@ export function ContactForm() {
         }),
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error("Failed to submit")
+        throw new Error(data.error || "Failed to submit. Please try again.")
       }
 
       setIsSubmitted(true)
-    } catch {
-      setError("Failed to submit. Please try again.")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to submit. Please try again.")
     } finally {
       setIsSubmitting(false)
     }

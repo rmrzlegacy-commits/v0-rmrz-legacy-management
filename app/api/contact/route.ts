@@ -1,14 +1,11 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, unit, moveIn, stayLength, occupants, income, message } = body
+    const { name, email, phone, unit, moveIn, message } = body
 
-    // Validate required fields
     if (!name || !email || !phone) {
       return NextResponse.json(
         { error: 'Name, email, and phone are required' },
@@ -16,25 +13,27 @@ export async function POST(request: Request) {
       )
     }
 
+    const apiKey = process.env.RESEND_API_KEY
     const contactEmail = process.env.CONTACT_EMAIL
-    if (!contactEmail) {
-      console.error('CONTACT_EMAIL environment variable not set')
+
+    if (!apiKey || !contactEmail) {
       return NextResponse.json(
-        { error: 'Server configuration error' },
+        { error: 'Email service not configured' },
         { status: 500 }
       )
     }
 
-    // Send email via Resend
+    const resend = new Resend(apiKey)
+
     const { error } = await resend.emails.send({
-      from: 'RMRZ Legacy Management <onboarding@resend.dev>',
+      from: 'RMRZ Legacy <inquiries@rmrzlegacymanagement.com>',
       to: contactEmail,
       replyTo: email,
       subject: `New Screening Request: ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #b8860b; border-bottom: 2px solid #b8860b; padding-bottom: 10px;">
-            New Screening Request
+            New Screening Request from ${name}
           </h2>
           
           <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
@@ -66,24 +65,6 @@ export async function POST(request: Request) {
               <td style="padding: 10px; border-bottom: 1px solid #eee;">${moveIn}</td>
             </tr>
             ` : ''}
-            ${stayLength ? `
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Length of Stay:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #eee;">${stayLength}</td>
-            </tr>
-            ` : ''}
-            ${occupants ? `
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Occupants:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #eee;">${occupants}</td>
-            </tr>
-            ` : ''}
-            ${income ? `
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Monthly Income:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #eee;">${income}</td>
-            </tr>
-            ` : ''}
           </table>
           
           ${message ? `
@@ -94,25 +75,23 @@ export async function POST(request: Request) {
           ` : ''}
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-            <p>This inquiry was submitted via the RMRZ Legacy Management website.</p>
+            <p>This inquiry was submitted via rmrzlegacymanagement.com</p>
           </div>
         </div>
       `,
     })
 
     if (error) {
-      console.error('Resend error:', error)
       return NextResponse.json(
-        { error: 'Failed to send email' },
+        { error: 'Failed to send email. Please try again.' },
         { status: 500 }
       )
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('API error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'An error occurred. Please try again.' },
       { status: 500 }
     )
   }
