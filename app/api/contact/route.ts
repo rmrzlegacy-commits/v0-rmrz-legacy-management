@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, unit, moveIn, message } = body
+    const { name, email, phone, unit, moveIn, moveOut, message } = body
 
     if (!name || !email || !phone) {
       return NextResponse.json(
@@ -64,6 +64,12 @@ export async function POST(request: Request) {
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Move-in Date:</td>
               <td style="padding: 10px; border-bottom: 1px solid #eee;">${moveIn}</td>
+            </tr>
+            ` : ''}
+            ${moveOut ? `
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Move-out Date:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">${moveOut}</td>
             </tr>
             ` : ''}
           </table>

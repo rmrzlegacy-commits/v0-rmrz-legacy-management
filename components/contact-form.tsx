@@ -18,6 +18,7 @@ export function ContactForm() {
     phone: "",
     preferredUnit: "",
     moveInDate: "",
+    moveOutDate: "",
     message: "",
   })
 
@@ -36,6 +37,7 @@ export function ContactForm() {
           phone: formData.phone,
           unit: formData.preferredUnit,
           moveIn: formData.moveInDate,
+          moveOut: formData.moveOutDate,
           message: formData.message,
         }),
       })
@@ -148,6 +150,17 @@ export function ContactForm() {
               type="date"
               value={formData.moveInDate}
               onChange={(e) => handleChange("moveInDate", e.target.value)}
+              className="mt-1 bg-input border-border/50 h-11"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="moveOutDate" className="text-sm text-foreground">Move-Out Date</Label>
+            <Input
+              id="moveOutDate"
+              type="date"
+              value={formData.moveOutDate}
+              onChange={(e) => handleChange("moveOutDate", e.target.value)}
               className="mt-1 bg-input border-border/50 h-11"
             />
           </div>
