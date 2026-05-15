@@ -17,8 +17,9 @@ export async function POST(request: Request) {
     const contactEmail = process.env.CONTACT_EMAIL
 
     if (!apiKey || !contactEmail) {
+      console.log('[v0] Missing env vars - RESEND_API_KEY:', !!apiKey, 'CONTACT_EMAIL:', !!contactEmail)
       return NextResponse.json(
-        { error: 'Email service not configured' },
+        { error: 'Email service not configured. Please contact the property manager directly.' },
         { status: 500 }
       )
     }
@@ -82,8 +83,9 @@ export async function POST(request: Request) {
     })
 
     if (error) {
+      console.log('[v0] Resend error:', JSON.stringify(error))
       return NextResponse.json(
-        { error: 'Failed to send email. Please try again.' },
+        { error: `Email failed: ${error.message || 'Unknown error'}` },
         { status: 500 }
       )
     }
