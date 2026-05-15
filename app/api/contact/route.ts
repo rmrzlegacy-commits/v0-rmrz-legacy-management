@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const resend = new Resend(apiKey)
 
     const { error } = await resend.emails.send({
-      from: 'RMRZ Legacy <inquiries@rmrzlegacymanagement.com>',
+      from: 'RMRZ Legacy <noreply@rmrzlegacymanagement.com>',
       to: contactEmail,
       replyTo: email,
       subject: `New Screening Request: ${name}`,
